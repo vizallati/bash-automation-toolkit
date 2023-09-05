@@ -1,6 +1,6 @@
 #!/bin/bash
 
-directory_to_backup=tobedeleted
+directory_to_backup=Downloads
 sleep 1
 echo "Directory contains the following files"
 sleep 1
