@@ -1,0 +1,11 @@
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Grant permissions to installation script
+        run: sudo chmod u+x install_grafana.sh
+      - name: Run installation script
+        run: sudo ./install_grafana.sh 5000
