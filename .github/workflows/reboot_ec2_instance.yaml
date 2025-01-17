@@ -1,0 +1,54 @@
+name: Reboot Given AWS EC2 INSTANCE
+
+on:
+  workflow_dispatch:
+    inputs:
+      aws_secret_key_id:
+        description: 'AWS secret key id'
+        required: true
+        default: ''
+      aws_secret_access_key:
+        description: 'AWS secret access key'
+        required: true
+        default: ''
+      ec2_instance_id:
+        description: 'EC2 instance id'
+        required: true
+        default: ''
+      aws_region:
+        description: 'AWS region'
+        required: true
+        default: 'eu-north-1'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Grant permissions to script
+      run: sudo chmod u+x reboot_ec2_instance.sh
+
+    - name: Mask aws secret key id
+      run: echo "::add-mask::${{ github.event.inputs.aws_secret_key_id }}"
+
+    - name: Mask aws secret access key
+      run: echo "::add-mask::${{ github.event.inputs.aws_secret_access_key }}"
+
+    - name: Mask ec2 instance id
+      run: echo "::add-mask::${{ github.event.inputs.ec2_instance_id }}"
+
+    - name: Run script
+      run: |
+        ./reboot_ec2_instance.sh \
+        ${{ github.event.inputs.aws_secret_key_id }} \
+        ${{ github.event.inputs.aws_secret_access_key }} \
+        ${{ github.event.inputs.ec2_instance_id }} \
+        ${{ github.event.inputs.aws_region }} \
+        
+        
+        
+        
+        
